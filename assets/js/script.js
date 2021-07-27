@@ -12,18 +12,35 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
+    document.getElementById("answer-box").addEventListener("keydown", function(event) {
+        if(event.key === "Enter") {
+            checkAnswer();
+        }
+    });
+
     runGame("addition");
 
 });
 
 
 function runGame(gameType) {
+    document.getElementById("answer-box").value = "";
+    document.getElementById("answer-box").focus();
     let num1 = Math.floor(Math.random() * 25) + 1;
     let num2 = Math.floor(Math.random() * 25) + 1;
 
     switch(gameType) {
         case "addition":
             displayAdditionQuestion(num1, num2);
+            break;
+        case "subtract":
+            displaySubtractQuestion(num1, num2);
+            break;
+        case "multiply":
+            displayMultiplyQuestion(num1, num2);
+            break;
+        case "division":
+            displayDivideQuestion(num1, num2);
             break;
         default:
             alert(`Unknown game type: ${gameType}`);
@@ -56,6 +73,16 @@ function calculateCorrectAnswer() {
         case "+":
             return [operand1 + operand2, "addition"];
             break;
+        case "-":
+            return [operand1 - operand2, "subtract"];
+            break;
+        case "x":
+            return [operand1 * operand2, "multiply"];
+            break;
+        case "/":
+            console.log(operand1 / operand2);
+            return [operand1 / operand2, "division"];
+            break;
         default:
             alert(`Unimplemented operator ${operator}`);
             throw `Unimplemented operator ${operator}. Aborting!`;
@@ -81,14 +108,20 @@ function displayAdditionQuestion(operand1, operand2) {
     document.getElementById("operator").textContent = "+";
 }
 
-function displaySubtractQuestion() {
-
+function displaySubtractQuestion(operand1, operand2) {
+    document.getElementById("operand1").textContent = operand1 > operand2 ? operand1 : operand2;
+    document.getElementById("operand2").textContent = operand1 > operand2 ? operand2 : operand1;
+    document.getElementById("operator").textContent = "-";
 }
 
-function displayMultiplyQuestion() {
-
+function displayMultiplyQuestion(operand1, operand2) {
+    document.getElementById("operand1").textContent = operand1;
+    document.getElementById("operand2").textContent = operand2;
+    document.getElementById("operator").textContent = "x";
 }
 
-function displayDivideQuestion() {
-
+function displayDivideQuestion(operand1, operand2) {
+    document.getElementById("operand1").textContent = operand1;
+    document.getElementById("operand2").textContent = operand2;
+    document.getElementById("operator").textContent = "/";
 }
